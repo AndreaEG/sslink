@@ -18,7 +18,7 @@ class DashboardController extends Controller
     $estudiantesActivos = Estudiante::where('estatus', 1)->count();
 
     // Estudiantes por mes (últimos 6)
-    $estudiantesPorMes = Estudiante::selectRaw("DATE_FORMAT(created_at, '%Y-%m') as mes, COUNT(*) as total")
+    $estudiantesPorMes = Estudiante::selectRaw("to_char(created_at, 'YYYY-MM') as mes, COUNT(*) as total")
         ->where('created_at', '>=', now()->subMonths(5)->startOfMonth())
         ->groupBy('mes')
         ->orderBy('mes')
